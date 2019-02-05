@@ -4,23 +4,42 @@
 	<title>Pizza calculator</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 	<link rel="stylesheet" href="css.css">
+	<meta charset="utf-8">
 </head>
 <body>
 
 	<h1>Pizza calculator</h1>
 
-	<table class="table" style="width: 500px; margin: 0 auto">
-	  <thead class="thead-dark">
-	    <tr>
-	      <th>#</th>
-	      <th>Pizza</th>
-	    </tr>
-	  </thead>
+	<div id="homePage">
 
-	  <tbody id="tbody">
+		<table class="table" style="width: 500px; margin: 0 auto">
+		  <thead class="thead-dark">
+		    <tr>
+		      <th>#</th>
+		      <th>Pizza</th>
+		    </tr>
+		  </thead>
 
-	  </tbody>
-	</table>
+		  <tbody id="tbody">
+
+		  </tbody>
+		</table>
+
+	</div>
+
+	<div class="container" id="pizzaInfo">
+		<div class="row">
+			<div class="col" style="float: left;">
+				<h2 id="pizzaName">Hier komt de pizza naam</h2>
+				<img style="width: 300px" id="pizzaPicture"></img>
+				<h4 id="pizzaPrice">Hier komt de prijs</h4>
+			</div>
+
+			<div class="col">
+				<h2>Kies toppings</h2>
+			</div>
+		</div>
+	</div>
 
 <script src="js.js" type="text/javascript" ></script>
 <script>startPizza()</script>
