@@ -1,8 +1,10 @@
 var allPizza = ['Pizza Hawaii', 'Pizza Salami', 'Pizza Calzone'];
 var allPrices = [5, 4, 6];
 
-var allToppings = [['Ananas', 'Ham', "Tomatensaus"],
-				['Salami', 'Paprika', 'Tomatensaus']];
+var allToppings = ['Peper', 'Kruiden', "Ui", "Augurk", "Tomaat"];
+var allToppingPrices = [1, 2, 1, .5, .2];
+
+var countPrice = [];
 
 function startPizza(){
 
@@ -46,8 +48,43 @@ function clickPizza($id) {
 
 	pizzaName.innerHTML = allPizza[$id]
 	pizzaPicture.src = allPizza[$id] + ".jpg";
+
 	pizzaPrice.innerHTML = '€' + allPrices[$id];
 
-	console.log(allToppings);
-	
+	var $price = allPrices[$id];
+	countPrice.push($price);
+
+	var toppingUl = document.createElement("ul");
+	toppingUl.setAttribute("id", 'toppingUl');
+	document.getElementById('toppingDiv').appendChild(toppingUl);
+
+	for (a = 0; a < allToppings.length; a++) { 
+
+		var toppingText = document.createTextNode(allToppings[a] + ' ' + '€' + allToppingPrices[a]);
+		var toppingLi = document.createElement("li");
+		toppingLi.appendChild(toppingText);
+		toppingLi.setAttribute("id", 't' + a);
+		document.getElementById('toppingUl').appendChild(toppingLi);
+
+		document.getElementById('t'+a).onclick = function(){
+			clickTopping(this.id);
+		}
+	}
+}
+
+function clickTopping($id) {
+
+	document.getElementById($id).style.color = 'green';
+
+	var $newId = $id.slice(-1);
+	countPrice.push(allToppingPrices[$newId]);
+
+	var sum = countPrice.reduce(add, 0);
+
+	function add(a, b){
+		return a+b;
+	}
+
+	document.getElementById('pizzaPrice').innerHTML = '€' + sum;
+
 }
