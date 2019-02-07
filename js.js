@@ -4,7 +4,13 @@ var allPrices = [5, 4, 6];
 var allToppings = ['Peper', 'Kruiden', "Ui", "Augurk", "Tomaat"];
 var allToppingPrices = [1, 2, 1, .5, .2];
 
+var allSizes = ['Normal', 'Medium', 'Large', 'Extra'];
+var sizesMulti = [1, 1.5, 2, 2.5];
+
 var countPrice = [];
+var multiPriceArray = [];
+
+var sum = 0;
 
 function startPizza(){
 
@@ -54,6 +60,12 @@ function clickPizza($id) {
 	var $price = allPrices[$id];
 	countPrice.push($price);
 
+	sum = countPrice.reduce(add, 0);
+
+	function add(a, b){
+		return a+b;
+	}
+
 	var toppingUl = document.createElement("ul");
 	toppingUl.setAttribute("id", 'toppingUl');
 	document.getElementById('toppingDiv').appendChild(toppingUl);
@@ -79,7 +91,7 @@ function clickTopping($id) {
 	var $newId = $id.slice(-1);
 	countPrice.push(allToppingPrices[$newId]);
 
-	var sum = countPrice.reduce(add, 0);
+	sum = countPrice.reduce(add, 0);
 
 	function add(a, b){
 		return a+b;
@@ -87,4 +99,38 @@ function clickTopping($id) {
 
 	document.getElementById('pizzaPrice').innerHTML = '€' + sum;
 
+
+	var sizeUl = document.createElement('ul');
+	sizeUl.setAttribute('id', 'sizeUl');
+	document.getElementById('sizeDiv').appendChild(sizeUl);
+
+	for (s = 0; s < allSizes.length; s++) {  
+		var sizeText = document.createTextNode(allSizes[s]);
+		var sizeLi = document.createElement("li");
+		sizeLi.appendChild(sizeText);
+		sizeLi.setAttribute('id', 's' + s);
+		document.getElementById('sizeUl').appendChild(sizeLi);
+
+		document.getElementById('s' + s).onclick = function(){
+			clickSize(this.id);
+		}
+	}
+}
+
+function clickSize($id){
+
+	document.getElementById($id).style.color = 'green';
+
+	var $newId = $id.slice(-1);
+
+	var multiPrice = sum * sizesMulti[$newId];
+	multiPriceArray.push(multiPrice);
+
+	newSum = multiPriceArray.reduce(add, 0);
+
+	function add(a, b){
+		return a+b;
+	}
+
+	document.getElementById('pizzaPrice').innerHTML = '€' + newSum;
 }
