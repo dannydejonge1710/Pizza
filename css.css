@@ -3,3 +3,11 @@
 	margin: 30px;
 }
 
+li {
+	cursor: pointer;
+}
+
+td{
+	cursor: pointer;
+}
+

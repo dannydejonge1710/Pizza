@@ -2,6 +2,7 @@
 
 var allPizza = ['Pizza Hawaii', 'Pizza Salami', 'Pizza Calzone'];
 var allPrices = [5, 4, 6];
+var countPizza = [0, 0, 0];
 
 var allToppings = ['Peper', 'Kruiden', "Ui", "Augurk", "Tomaat"];
 var allToppingPrices = [1, 2, 1, .5, .2];
@@ -41,6 +42,7 @@ var serviceSum = 0;
 function startPizza(){
 
 	document.getElementById('pizzaInfo').style.display = 'none';
+	document.getElementById('homePage').style.displays = 'block';
 
 	for (i = 0; i < allPizza.length; i++) { 
 
@@ -59,7 +61,24 @@ function startPizza(){
 		
 		document.getElementById('pizzalist' + i).appendChild(tdP);
 
-		document.getElementById(i).innerHTML = allPizza[i];
+//
+
+
+		var tdI = document.createElement("td");
+		tdI.setAttribute("id", TDi + i);
+
+		var input = document.createElement('input');
+		input.type = "text";
+
+		document.getElementById('pizzalist' + i).appendChild(input);
+		document.getElementById('pizzalist' + i).appendChild(tdI);
+
+
+//
+
+
+
+		document.getElementById(i).innerHTML = allPizza[i] + ' ' + countPizza[0];
 
 		document.getElementById(i).onclick = function(){
 			clickPizza(this.id);
@@ -68,6 +87,7 @@ function startPizza(){
 }
 
 function clickPizza($id) {
+	countPizza[$id]++;
 
 	var homePage = document.getElementById('homePage');
 	var pizzaInfo = document.getElementById('pizzaInfo');
@@ -78,7 +98,7 @@ function clickPizza($id) {
 	homePage.style.display = 'none';
 	pizzaInfo.style.display = 'block';
 
-	pizzaName.innerHTML = allPizza[$id]
+	pizzaName.innerHTML = allPizza[$id];
 	pizzaPicture.src = allPizza[$id] + ".jpg";
 
 	pizzaPrice.innerHTML = '€' + allPrices[$id];
@@ -295,10 +315,11 @@ function clickService(id){
 
 	document.getElementById('pizzaPrice').innerHTML = '€' + serviceSum;
 
-	finishAction();
+	startPizza();
 }
 
 function finishAction(){
 	document.getElementById('pizzaName').innerHTML = 'Je kunt nu bestellen :-)';
 	document.getElementById('dynamicDiv').style.display = 'none';
+
 }
