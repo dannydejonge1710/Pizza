@@ -1,13 +1,53 @@
 *{
 	text-align: center;
 	margin: 30px;
+	letter-spacing: 2px;
+	font-family: 'Pacifico', cursive;
+}
+
+body {
+	background-color: lightgrey;
+}
+
+#wrapper {
+	width: 1000px;
+	min-height: 580px;
+	background-color: white;
+	margin: 0 auto;
+	padding-top: 20px;
+	padding-bottom: 20px;
 }
 
 li {
 	cursor: pointer;
+	list-style-type: none;
+}
+
+li:hover {
+	color: grey;
 }
 
 td{
 	cursor: pointer;
 }
 
+td:hover{
+	color: grey;
+}
+
+input {
+	width: 80px;
+}
+
+#chooseBTN1{
+	margin: 10px;
+}
+
+#chooseBTN2{
+	margin: 10px;
+}
+
+h1:hover{
+	color: grey;
+	cursor: pointer;
+}
