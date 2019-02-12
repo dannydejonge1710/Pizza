@@ -254,6 +254,10 @@ function chooseAction(){
 	chooseBTN2.setAttribute('class', 'btn btn-outline-dark');
 	document.getElementById('dynamicDiv').appendChild(chooseBTN2);
 
+	chooseBTN2.onclick = function(){
+		startPizza();
+	}
+
 
 }
 
