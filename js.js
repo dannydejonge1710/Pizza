@@ -1,6 +1,10 @@
 // Danny de Jonge, Pizza calculator
 
-var $count = 0;
+var endPriceArray = [];
+var endPrice = 0;
+
+var $badgeCount = 0;
+var showbadge = null;
 
 var allPizza = ['Pizza Hawaii', 'Pizza Salami', 'Pizza Calzone'];
 var allPrices = [5, 4, 6];
@@ -50,27 +54,38 @@ function startPizza(){
 	document.getElementById('pizzaInfo').style.display = 'none';
 	document.getElementById('homePage').style.display = 'block';
 
+	var showBTN = document.createElement('button');
+	showBTN.setAttribute('id', 'showBTN');
+	showBTN.innerHTML = 'Nu bestellen,'  + ' €' + endPrice;
+	showBTN.setAttribute('class', 'btn btn-outline-dark');
+	document.getElementById('showButton').appendChild(showBTN);
+
+	var showSpan = document.createElement('div');
+	showSpan.setAttribute('id', 'showSpan');
+	document.getElementById('showBTN').appendChild(showSpan);
+
+	showBTN.onclick = function(){
+		showBTNClick();
+	}
+
+	showSpan.innerHTML = $badgeCount;
+	
 	for (i = 0; i < allPizza.length; i++) { 
 
-		if (document.getElementById("pizzalist" + i) == null) {
+		var tr = document.createElement("tr");
+		tr.setAttribute("id", "pizzalist" + i);
+		document.getElementById('tbody').appendChild(tr);
 
-			var tr = document.createElement("tr");
-			tr.setAttribute("id", "pizzalist" + i);
-			document.getElementById('tbody').appendChild(tr);
+		var tdP = document.createElement("td");
+		tdP.setAttribute("id", i);
+		document.getElementById('pizzalist' + i).appendChild(tdP);
 
-			var tdP = document.createElement("td");
-			tdP.setAttribute("id", i);
-			document.getElementById('pizzalist' + i).appendChild(tdP);
+		var tdN = document.createElement("td");
+		tdN.setAttribute("id", "myTdN" + i);
+		document.getElementById('pizzalist' + i).appendChild(tdN);
 
-			var tdN = document.createElement("td");
-			tdN.setAttribute("id", "myTdN" + i);
-			document.getElementById('pizzalist' + i).appendChild(tdN);
-
-			document.getElementById('myTdN' + i).innerHTML = countPizza[0];
-
-			document.getElementById(i).innerHTML = allPizza[i];
-
-		}
+		document.getElementById('myTdN' + i).innerHTML = countPizza[0];
+		document.getElementById(i).innerHTML = allPizza[i];
 
 		document.getElementById(i).onclick = function(){
 			clickPizza(this.id);
@@ -78,10 +93,17 @@ function startPizza(){
 	}
 }
 
+function showBTNClick(){
+	if (showbadge !== null) {
+		paymentAction();
+	} else {
+		alert('Je moet eerst een pizza maken om te bestellen');
+	}
+}
+
 function clickPizza($id) {
 
-	$count++;
-	countPizza[$id] = $count;
+	$badgeCount++;
 
 	document.getElementById($id).style.color = 'darkgreen';
 
@@ -92,6 +114,7 @@ function clickPizza($id) {
 	var pizzaPrice = document.getElementById('pizzaPrice');
 
 	homePage.style.display = 'none';
+	document.getElementById('showBTN').style.display = 'none';
 	pizzaInfo.style.display = 'block';
 
 	pizzaName.innerHTML = allPizza[$id];
@@ -116,8 +139,8 @@ function clickPizza($id) {
 
 		var toppingText = document.createTextNode(allToppings[a] + ' ' + '€' + allToppingPrices[a]);
 		var toppingLi = document.createElement("li");
-		toppingLi.appendChild(toppingText);
 		toppingLi.setAttribute("id", 't' + a);
+		toppingLi.appendChild(toppingText);
 		document.getElementById('toppingUl').appendChild(toppingLi);
 
 		document.getElementById('t'+a).onclick = function(){
@@ -236,13 +259,19 @@ function clickSlice($id) {
 function chooseAction(){
 
 	document.getElementById('sliceUl').style.display = 'none';
-	document.getElementById('dynamicH2').innerHTML = 'Do you want to order now?'
+	document.getElementById('dynamicH2').innerHTML = 'Do you want to order now?';
 
 	var chooseBTN1 = document.createElement('button');
 	chooseBTN1.setAttribute('id', 'chooseBTN1');
 	chooseBTN1.innerHTML = 'Nu bestellen'
 	chooseBTN1.setAttribute('class', 'btn btn-outline-dark');
 	document.getElementById('dynamicDiv').appendChild(chooseBTN1);
+
+	var badgeSpan = document.createElement('div');
+	badgeSpan.setAttribute('id', 'badgeSpan');
+	document.getElementById('chooseBTN1').appendChild(badgeSpan);
+
+	badgeSpan.innerHTML = $badgeCount;
 
 	chooseBTN1.onclick = function(){
 		paymentAction();
@@ -255,15 +284,13 @@ function chooseAction(){
 	document.getElementById('dynamicDiv').appendChild(chooseBTN2);
 
 	chooseBTN2.onclick = function(){
-		startPizza();
+		resetAction();
 	}
-
-
 }
 
 
-function paymentAction(){
-
+function paymentAction()
+{
 	document.getElementById('chooseBTN1').style.display = 'none';
 	document.getElementById('chooseBTN2').style.display = 'none';
 
@@ -348,4 +375,93 @@ function finishAction(){
 	chooseBTN3.onclick = function(){
 		reload();
 	}
+}
+
+function resetAction(){
+
+	showbadge = 1;
+
+	var countPrice = [];
+	var multiPriceArray = [];
+
+	var sum = 0;
+	var newSum = 0;
+	// var sliceSum = 0;
+	var paymentSum = 0;
+	var serviceSum = 0;
+
+	endPriceArray.push(sliceSum);
+	endPrice = endPriceArray.reduce(add, 0);
+
+	function add(a, b){
+		return a+b;
+	}
+
+	//Removes elements startPizza()
+
+	if (document.getElementById('pizzalist' + 0)) {
+		for (y = 0; y < allPizza.length; y++) { 
+			document.getElementById('pizzalist' + y).parentNode.removeChild(document.getElementById('pizzalist' + y));
+		}
+	}
+
+	if (document.getElementById('showBTN')) {
+		document.getElementById('showBTN').parentNode.removeChild(document.getElementById('showBTN'));
+	}
+
+	//Removes elements clickPizza()
+
+	if (document.getElementById('toppingUl')) {
+		document.getElementById('toppingUl').parentNode.removeChild(document.getElementById('toppingUl'));
+	}
+
+	if (document.getElementById('buttonId')) {
+		document.getElementById('buttonId').parentNode.removeChild(document.getElementById('buttonId'));
+	}
+
+	//Removes elements sizeAction()
+
+	if (document.getElementById('sizeUl')) {
+		document.getElementById('sizeUl').parentNode.removeChild(document.getElementById('sizeUl'));
+	}
+
+	//Removes elements sliceAction()
+
+	if (document.getElementById('sliceUl')) {
+		document.getElementById('sliceUl').parentNode.removeChild(document.getElementById('sliceUl'));
+	}
+
+	//Removes elements chooseAction()
+
+	if (document.getElementById('chooseBTN1')) {
+		document.getElementById('chooseBTN1').parentNode.removeChild(document.getElementById('chooseBTN1'));
+	}
+
+	if (document.getElementById('chooseBTN2')) {	
+		document.getElementById('chooseBTN2').parentNode.removeChild(document.getElementById('chooseBTN2'));
+	}
+
+	if (document.getElementById('badgeSpan')) {	
+		document.getElementById('badgeSpan').parentNode.removeChild(document.getElementById('badgeSpan'));
+	}
+
+	//Removes elements paymentAction()
+
+	if (document.getElementById('paymentUl')) {
+		document.getElementById('paymentUl').parentNode.removeChild(document.getElementById('paymentUl'));
+	}
+
+	//Removes elements paymentAction()
+
+	if (document.getElementById('serviceUl')) {
+		document.getElementById('serviceUl').parentNode.removeChild(document.getElementById('serviceUl'));
+	}
+
+	//Removes elements finishAction()
+
+	if (document.getElementById('chooseBTN3')) {
+		document.getElementById('chooseBTN3').parentNode.removeChild(document.getElementById('chooseBTN3'));
+	}
+
+	startPizza();
 }

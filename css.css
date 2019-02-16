@@ -41,6 +41,7 @@ input {
 
 #chooseBTN1{
 	margin: 10px;
+	position: relative;
 }
 
 #chooseBTN2{
@@ -51,3 +52,31 @@ h1:hover{
 	color: grey;
 	cursor: pointer;
 }
+
+#badgeSpan{
+	width: 25px;
+	height: 25px;
+	background-color: red;
+	position: absolute;
+	top: -42px;
+	right: -42px;
+	border-radius: 50%;
+	color: white;
+}
+
+#showBTN {
+	margin: 10px;
+	position: relative;
+}
+
+#showSpan{
+	width: 25px;
+	height: 25px;
+	background-color: red;
+	position: absolute;
+	top: -42px;
+	right: -42px;
+	border-radius: 50%;
+	color: white;
+}
+
