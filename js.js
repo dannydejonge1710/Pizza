@@ -80,11 +80,6 @@ function startPizza(){
 		tdP.setAttribute("id", i);
 		document.getElementById('pizzalist' + i).appendChild(tdP);
 
-		var tdN = document.createElement("td");
-		tdN.setAttribute("id", "myTdN" + i);
-		document.getElementById('pizzalist' + i).appendChild(tdN);
-
-		document.getElementById('myTdN' + i).innerHTML = countPizza[0];
 		document.getElementById(i).innerHTML = allPizza[i];
 
 		document.getElementById(i).onclick = function(){
@@ -381,14 +376,14 @@ function resetAction(){
 
 	showbadge = 1;
 
-	var countPrice = [];
-	var multiPriceArray = [];
+	countPrice = [];
+	multiPriceArray = [];
 
-	var sum = 0;
-	var newSum = 0;
-	// var sliceSum = 0;
-	var paymentSum = 0;
-	var serviceSum = 0;
+	sum = 0;
+	newSum = 0;
+
+	paymentSum = 0;
+	serviceSum = 0;
 
 	endPriceArray.push(sliceSum);
 	endPrice = endPriceArray.reduce(add, 0);
@@ -396,6 +391,8 @@ function resetAction(){
 	function add(a, b){
 		return a+b;
 	}
+
+	sliceSum = 0;
 
 	//Removes elements startPizza()
 
